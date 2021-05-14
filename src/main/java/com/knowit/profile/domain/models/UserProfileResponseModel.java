@@ -1,34 +1,19 @@
-package com.knowit.profile.domain.entities;
+package com.knowit.profile.domain.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "users")
-public class User  {
+public class UserProfileResponseModel {
 
-    private String id;
-
+    @NotBlank
     private String firstName;
 
+    @NotBlank
     private String lastName;
 
+    @NotBlank
     private LocalDate bornOn;
 
-    @Id
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    @Column(nullable = false)
     public String getFirstName() {
         return firstName;
     }
@@ -37,7 +22,6 @@ public class User  {
         this.firstName = firstName;
     }
 
-    @Column(nullable = false)
     public String getLastName() {
         return lastName;
     }
@@ -46,7 +30,6 @@ public class User  {
         this.lastName = lastName;
     }
 
-    @Column(nullable = false)
     public LocalDate getBornOn() {
         return bornOn;
     }
@@ -55,4 +38,3 @@ public class User  {
         this.bornOn = bornOn;
     }
 }
-

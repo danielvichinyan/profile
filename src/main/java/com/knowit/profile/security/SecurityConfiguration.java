@@ -9,22 +9,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final AuthorizationHeaderFilter authorizationHeaderFilter;
+    private final AuthorizationHeaderFilter authHeaderFilter;
 
-    public SecurityConfiguration(AuthorizationHeaderFilter authorizationHeaderFilter) {
-        this.authorizationHeaderFilter = authorizationHeaderFilter;
+    public SecurityConfiguration(AuthorizationHeaderFilter authHeaderFilter) {
+        this.authHeaderFilter = authHeaderFilter;
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+    protected void configure(HttpSecurity http) throws Exception {
+        http
                 .csrf()
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/**")
                 .permitAll()
                 .and()
-                .addFilterBefore(this.authorizationHeaderFilter, UsernamePasswordAuthenticationFilter.class);
-        super.configure(httpSecurity);
+                .addFilterBefore(this.authHeaderFilter, UsernamePasswordAuthenticationFilter.class);
+        super.configure(http);
     }
 }

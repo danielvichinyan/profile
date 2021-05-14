@@ -1,9 +1,9 @@
 package com.knowit.profile.services;
 
 import com.knowit.profile.domain.entities.User;
-import com.knowit.profile.domain.models.UpdateUserResponse;
-import com.knowit.profile.domain.models.UserProfileResponse;
-import com.knowit.profile.domain.models.UserRegistrationModel;
+import com.knowit.profile.domain.models.RegisterUserModel;
+import com.knowit.profile.domain.models.UpdateUserModel;
+import com.knowit.profile.domain.models.UserProfileResponseModel;
 import com.knowit.profile.exceptions.UserDoesNotExistException;
 import com.knowit.profile.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -29,47 +29,45 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Bean
-    public Consumer<KStream<String, UserRegistrationModel>> onUserRegistered() {
-        return input -> input.foreach((emptyString, userProfile) -> {
-            if (userProfile.getId() == null) {
+    public Consumer<KStream<String, RegisterUserModel>> onUserRegistered() {
+        return input -> input.foreach((emptyString, inputProfileModel) -> {
+            if (inputProfileModel.getId() == null) {
                 return;
             }
-            User user = this.modelMapper.map(userProfile, User.class);
+            User user = this.modelMapper.map(inputProfileModel, User.class);
             logger.info(
-                    "{} {} is registered successfully!",
-                    userProfile.getFirstName(),
-                    userProfile.getLastName()
+                    "{} {} is registered successfully in Database!",
+                    inputProfileModel.getFirstName(),
+                    inputProfileModel.getLastName()
             );
+            this.userRepository.saveAndFlush(user);
         });
     }
 
     @Override
-    public UserProfileResponse getUserProfile(User user) throws UserDoesNotExistException {
-        User userDetails = this.fetchUserById(user.getId());
-
-        return this.modelMapper.map(userDetails, UserProfileResponse.class);
+    public UserProfileResponseModel getUserProfile(User user) throws UserDoesNotExistException {
+        User userInfo = this.fetchByUserId(user.getId());
+        return this.modelMapper.map(userInfo, UserProfileResponseModel.class);
     }
 
     @Override
-    public User fetchUserById(String id) throws UserDoesNotExistException {
+    public User fetchByUserId(String id) throws UserDoesNotExistException {
         return this.userRepository.findById(id).orElseThrow(() -> new UserDoesNotExistException());
     }
 
     @Override
-    public UserProfileResponse updateUser(
+    public UserProfileResponseModel updateProfile(
             User user,
-            UpdateUserResponse updateUserResponse
+            UpdateUserModel updateUserModel
     ) throws UserDoesNotExistException {
-        User currentUser = this.fetchUserById(user.getId());
+        User currentUser = this.fetchByUserId(user.getId());
 
-        currentUser.setUsername(updateUserResponse.getUsername());
-        currentUser.setFirstName(updateUserResponse.getFirstName());
-        currentUser.setLastName(updateUserResponse.getLastName());
-        currentUser.setEmail(updateUserResponse.getEmail());
+        currentUser.setFirstName(updateUserModel.getFirstName());
+        currentUser.setLastName(updateUserModel.getLastName());
+        currentUser.setBornOn(updateUserModel.getBornOn());
 
         this.userRepository.saveAndFlush(currentUser);
-        logger.info("User updated successfully!");
-
-        return this.modelMapper.map(currentUser, UserProfileResponse.class);
+        logger.info("Changes were updated successfully!");
+        return this.modelMapper.map(currentUser, UserProfileResponseModel.class);
     }
 }

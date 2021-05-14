@@ -40,7 +40,7 @@ public class AuthorizationHeaderFilter extends OncePerRequestFilter {
         }
 
         try {
-            User user = this.profileService.fetchUserById(userId);
+            User user = this.profileService.fetchByUserId(userId);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     user,
                     null,
