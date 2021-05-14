@@ -55,4 +55,3 @@ public class User  {
         this.bornOn = bornOn;
     }
 }
-

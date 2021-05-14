@@ -1,0 +1,4 @@
+FROM openjdk:14-jdk-alpine
+WORKDIR profile
+COPY ./target/profile-0.0.1-SNAPSHOT.jar .
+CMD ["java", "-jar", "./profile-0.0.1-SNAPSHOT.jar"]

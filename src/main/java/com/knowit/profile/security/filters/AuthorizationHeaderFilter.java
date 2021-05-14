@@ -3,6 +3,7 @@ package com.knowit.profile.security.filters;
 import com.knowit.profile.domain.entities.User;
 import com.knowit.profile.exceptions.UserDoesNotExistException;
 import com.knowit.profile.services.ProfileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class AuthorizationHeaderFilter extends OncePerRequestFilter {
 
     private final ProfileService profileService;
 
+    @Autowired
     public AuthorizationHeaderFilter(ProfileService profileService) {
         this.profileService = profileService;
     }
@@ -36,18 +38,19 @@ public class AuthorizationHeaderFilter extends OncePerRequestFilter {
 
         if (userId == null) {
             httpServletResponse.setStatus(403);
-            throw new ServletException("Invalid user id!");
+            throw new ServletException("User id is null!");
         }
 
         try {
             User user = this.profileService.fetchByUserId(userId);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     user,
                     null,
                     new ArrayList<>()
             );
 
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (UserDoesNotExistException e) {
             logger.error(e.getStackTrace(), e);
         }
