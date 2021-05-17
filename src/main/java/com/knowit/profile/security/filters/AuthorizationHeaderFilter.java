@@ -40,7 +40,9 @@ public class AuthorizationHeaderFilter extends OncePerRequestFilter {
             httpServletResponse.setStatus(403);
             throw new ServletException("User id is null!");
         }
-
+        logger.info("+++++++||||||");
+        logger.info(httpServletRequest.getHeader("X-User-Scopes"));
+        logger.info("+++++++||||||");
         try {
             User user = this.profileService.fetchByUserId(userId);
 

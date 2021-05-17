@@ -19,6 +19,8 @@ public class User  {
 
     private LocalDate bornOn;
 
+    private String email;
+
     @Id
     public String getId() {
         return id;
@@ -53,5 +55,14 @@ public class User  {
 
     public void setBornOn(LocalDate bornOn) {
         this.bornOn = bornOn;
+    }
+
+    @Column(nullable = false)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

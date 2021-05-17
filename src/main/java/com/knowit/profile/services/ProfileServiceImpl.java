@@ -62,12 +62,28 @@ public class ProfileServiceImpl implements ProfileService {
     ) throws UserDoesNotExistException {
         User currentUser = this.fetchByUserId(user.getId());
 
-        currentUser.setFirstName(updateUserModel.getFirstName());
-        currentUser.setLastName(updateUserModel.getLastName());
-        currentUser.setBornOn(updateUserModel.getBornOn());
+        if (!updateUserModel.getFirstName().equals("")) {
+            currentUser.setFirstName(updateUserModel.getFirstName());
+        }
+
+        if (!updateUserModel.getLastName().equals("")) {
+            currentUser.setLastName(updateUserModel.getLastName());
+        }
+
+        if (!updateUserModel.getBornOn().equals("")) {
+            currentUser.setBornOn(updateUserModel.getBornOn());
+        }
+
+        if (!updateUserModel.getEmail().equals("")) {
+            currentUser.setEmail(updateUserModel.getEmail());
+        }
+
+//        this.updateAvatar(image, currentUser.getId());
 
         this.userRepository.saveAndFlush(currentUser);
         logger.info("Changes were updated successfully!");
+
         return this.modelMapper.map(currentUser, UserProfileResponseModel.class);
+
     }
 }

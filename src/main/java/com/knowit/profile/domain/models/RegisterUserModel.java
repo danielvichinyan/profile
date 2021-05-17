@@ -19,6 +19,9 @@ public class RegisterUserModel {
     @NotBlank
     private LocalDate bornOn;
 
+    @NotBlank
+    private String email;
+
     public String getId() {
         return id;
     }
@@ -49,5 +52,13 @@ public class RegisterUserModel {
 
     public void setBornOn(LocalDate bornOn) {
         this.bornOn = bornOn;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

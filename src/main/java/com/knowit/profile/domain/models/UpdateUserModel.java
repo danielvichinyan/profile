@@ -14,6 +14,9 @@ public class UpdateUserModel {
     @NotBlank
     private LocalDate bornOn;
 
+    @NotBlank
+    private String email;
+
     public String getFirstName() {
         return firstName;
     }
@@ -36,5 +39,13 @@ public class UpdateUserModel {
 
     public void setBornOn(LocalDate bornOn) {
         this.bornOn = bornOn;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
