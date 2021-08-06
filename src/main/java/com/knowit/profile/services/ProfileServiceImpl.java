@@ -84,5 +84,6 @@ public class ProfileServiceImpl implements ProfileService {
         logger.info("Changes were updated successfully!");
 
         return this.modelMapper.map(currentUser, UserProfileResponseModel.class);
+
     }
 }

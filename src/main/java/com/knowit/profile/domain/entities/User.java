@@ -20,8 +20,6 @@ public class User {
 
     private String email;
 
-    private Long quizPoints;
-
     @Id
     public String getId() {
         return id;
@@ -66,9 +64,4 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    @Column(nullable = false)
-    public Long getQuizPoints() {return quizPoints;}
-
-    public void setQuizPoints(Long quizPoints) {this.quizPoints = quizPoints;}
 }
