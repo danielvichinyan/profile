@@ -17,6 +17,9 @@ public class UserProfileResponseModel {
     @NotBlank
     private String email;
 
+    @NotBlank
+    private Long quizPoints;
+
     public String getFirstName() {
         return firstName;
     }
@@ -48,4 +51,8 @@ public class UserProfileResponseModel {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Long getQuizPoints() {return quizPoints;}
+
+    public void setQuizPoints(Long quizPoints) {this.quizPoints = quizPoints;}
 }

@@ -4,12 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "users")
-public class User  {
+public class User {
 
     private String id;
 
@@ -20,6 +19,8 @@ public class User  {
     private LocalDate bornOn;
 
     private String email;
+
+    private Long quizPoints;
 
     @Id
     public String getId() {
@@ -65,4 +66,9 @@ public class User  {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Column(nullable = false)
+    public Long getQuizPoints() {return quizPoints;}
+
+    public void setQuizPoints(Long quizPoints) {this.quizPoints = quizPoints;}
 }
