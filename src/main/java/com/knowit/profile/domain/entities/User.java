@@ -20,6 +20,8 @@ public class User {
 
     private String email;
 
+    private int quizPoints;
+
     @Id
     public String getId() {
         return id;
@@ -63,5 +65,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Column(nullable = false)
+    public int getQuizPoints() {
+        return quizPoints;
+    }
+
+    public void setQuizPoints(int quizPoints) {
+        this.quizPoints = quizPoints;
     }
 }

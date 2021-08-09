@@ -22,6 +22,9 @@ public class RegisterUserModel {
     @NotBlank
     private String email;
 
+    @NotBlank
+    private int quizPoints;
+
     public String getId() {
         return id;
     }
@@ -60,5 +63,13 @@ public class RegisterUserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getQuizPoints() {
+        return quizPoints;
+    }
+
+    public void setQuizPoints(int quizPoints) {
+        this.quizPoints = quizPoints;
     }
 }

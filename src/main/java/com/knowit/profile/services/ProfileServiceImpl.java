@@ -1,9 +1,7 @@
 package com.knowit.profile.services;
 
 import com.knowit.profile.domain.entities.User;
-import com.knowit.profile.domain.models.RegisterUserModel;
-import com.knowit.profile.domain.models.UpdateUserModel;
-import com.knowit.profile.domain.models.UserProfileResponseModel;
+import com.knowit.profile.domain.models.*;
 import com.knowit.profile.exceptions.UserDoesNotExistException;
 import com.knowit.profile.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -85,5 +83,21 @@ public class ProfileServiceImpl implements ProfileService {
 
         return this.modelMapper.map(currentUser, UserProfileResponseModel.class);
 
+    }
+
+    @Override
+    public UserProfileResponseModel updateUserPoints(
+            User user,
+            UserGainPointsRequestModel model
+    ) throws UserDoesNotExistException {
+        User currentUser = this.fetchByUserId(user.getId());
+        System.out.println("Incoming points: " + model.getQuizPoints());
+        System.out.println("Old user points: " + currentUser.getQuizPoints());
+        currentUser.setQuizPoints(model.getQuizPoints());
+        System.out.println("New user points: " + user.getQuizPoints());
+        this.userRepository.saveAndFlush(currentUser);
+        logger.info("Changes were updated successfully!");
+
+        return this.modelMapper.map(currentUser, UserProfileResponseModel.class);
     }
 }

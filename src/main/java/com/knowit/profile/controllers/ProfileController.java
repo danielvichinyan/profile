@@ -2,6 +2,7 @@ package com.knowit.profile.controllers;
 
 import com.knowit.profile.domain.entities.User;
 import com.knowit.profile.domain.models.UpdateUserModel;
+import com.knowit.profile.domain.models.UserGainPointsRequestModel;
 import com.knowit.profile.domain.models.UserProfileResponseModel;
 import com.knowit.profile.exceptions.UserDoesNotExistException;
 import com.knowit.profile.services.ProfileService;
@@ -33,5 +34,13 @@ public class ProfileController {
             @RequestBody UpdateUserModel updateUserModel
     ) throws UserDoesNotExistException {
         return this.profileService.updateProfile(user, updateUserModel);
+    }
+
+    @PutMapping("/me/points")
+    public UserProfileResponseModel updateUserPoints(
+            @AuthenticationPrincipal User user,
+            @RequestBody UserGainPointsRequestModel model
+    ) throws UserDoesNotExistException {
+        return this.profileService.updateUserPoints(user, model);
     }
 }

@@ -17,6 +17,9 @@ public class UserProfileResponseModel {
     @NotBlank
     private String email;
 
+    @NotBlank
+    private int quizPoints;
+
     public String getFirstName() {
         return firstName;
     }
@@ -47,5 +50,13 @@ public class UserProfileResponseModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getQuizPoints() {
+        return quizPoints;
+    }
+
+    public void setQuizPoints(int quizPoints) {
+        this.quizPoints = quizPoints;
     }
 }
