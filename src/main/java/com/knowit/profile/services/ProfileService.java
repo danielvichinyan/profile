@@ -7,6 +7,8 @@ import com.knowit.profile.domain.models.UserGainPointsResponseModel;
 import com.knowit.profile.domain.models.UserProfileResponseModel;
 import com.knowit.profile.exceptions.UserDoesNotExistException;
 
+import java.util.List;
+
 public interface ProfileService {
 
     UserProfileResponseModel getUserProfile(User user) throws UserDoesNotExistException;
@@ -16,4 +18,6 @@ public interface ProfileService {
     UserProfileResponseModel updateProfile(User user, UpdateUserModel updateUserModel) throws UserDoesNotExistException;
 
     UserProfileResponseModel updateUserPoints(User user, UserGainPointsRequestModel model) throws UserDoesNotExistException;
+
+    List<UserProfileResponseModel> getAllUsers();
 }

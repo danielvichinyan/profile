@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ProfileController {
 
@@ -42,5 +44,10 @@ public class ProfileController {
             @RequestBody UserGainPointsRequestModel model
     ) throws UserDoesNotExistException {
         return this.profileService.updateUserPoints(user, model);
+    }
+
+    @GetMapping("/users")
+    public List<UserProfileResponseModel> getAllUsers() {
+        return this.profileService.getAllUsers();
     }
 }

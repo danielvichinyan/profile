@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.apache.kafka.streams.kstream.KStream;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 @Service
@@ -99,5 +102,21 @@ public class ProfileServiceImpl implements ProfileService {
         logger.info("Changes were updated successfully!");
 
         return this.modelMapper.map(currentUser, UserProfileResponseModel.class);
+    }
+
+    @Override
+    public List<UserProfileResponseModel> getAllUsers() {
+        List<User> userList = this.userRepository.findAll();
+        List<UserProfileResponseModel> mappedList = new ArrayList<>();
+
+        userList.forEach(user -> {
+            UserProfileResponseModel userProfileResponseModel = new UserProfileResponseModel();
+            userProfileResponseModel.setFirstName(user.getFirstName());
+            userProfileResponseModel.setLastName(user.getLastName());
+            userProfileResponseModel.setQuizPoints(user.getQuizPoints());
+            mappedList.add(userProfileResponseModel);
+        });
+
+        return mappedList;
     }
 }
